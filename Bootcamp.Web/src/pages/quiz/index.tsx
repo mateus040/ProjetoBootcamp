@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 
 export default function Quiz() {
   return (
-    <div className="px-8 md:px-0">
+    <div className="py-6 px-8 md:px-0">
       <div className="container mx-auto">
         <div className="flex items-center justify-center min-h-screen">
           <div className="w-full md:w-[650px] bg-white p-6 rounded-xl text-black">
-            <p className="font-semibold text-2xl">Quiz Unisagrado</p>
+            <p className="font-semibold text-3xl">Quiz Unisagrado</p>
             <hr className="mt-4 border-black" />
 
-            <div className="space-y-5 mt-5">
+            <div className="space-y-5 mt-5 text-xl">
               <p className="font-semibold">
                 Como você implementaria uma função para inverter uma string em
                 JavaScript?
@@ -34,7 +34,7 @@ export default function Quiz() {
               </div>
             </div>
 
-            <div className="flex flex-col lg:flex-row items-center justify-between mt-4">
+            <div className="flex flex-col lg:flex-row items-center justify-between mt-4 text-xl">
               <Link
                 to="/"
                 className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-zinc-800 border-2 border-black hover:border-zinc-800 text-center uppercase font-bold hover:text-white transition-colors duration-150"
