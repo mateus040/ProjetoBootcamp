@@ -45,7 +45,7 @@ export default function CadastrarUsuario() {
                   to="/quiz"
                   className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-[#ff0b0b] border-2 border-black hover:border-[#ff0b0b] text-center uppercase font-bold hover:text-white transition-colors duration-150 mt-3 lg:mt-0"
                 >
-                  Continuar
+                  Iniciar
                 </Link>
               </div>
             </div>
