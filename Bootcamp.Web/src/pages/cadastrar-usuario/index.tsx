@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 export default function CadastrarUsuario() {
   return (
-    <div className="py-6 px-12 md:px-0 mt-16 md:mt-0 mb-16 md:mb-0">
+    <div className=" px-12 md:px-0">
       <div className="container mx-auto">
-        <div className="flex flex-col items-center justify-center h-screen">
-          <p className="text-[40px] md:text-[60px] font-bold mb-10 text-center">Vamos começar!</p>
+        <div className="flex flex-col items-center justify-center min-h-screen">
+          <p className="text-[30px] sm:text-[60px] font-bold mb-10 text-center">Vamos começar!</p>
 
           <div className="w-full md:w-[650px] bg-white p-6 rounded-xl text-black">
             <p className="font-semibold text-2xl">Cadastro</p>
