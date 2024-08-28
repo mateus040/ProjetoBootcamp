@@ -1,12 +1,41 @@
 import { Link } from "react-router-dom";
+import { FaRegClock } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { ModalTempoEsgotado } from "../components/modal-tempo-esgotado";
+
+const TIME = 5;
 
 export default function Quiz() {
+  const [time, setTime] = useState<number>(TIME);
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (time > 0) {
+      const timer = setTimeout(() => setTime(time - 1), 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setOpenModal(true);
+    }
+  }, [time]);
+
   return (
     <div className="py-6 px-8 md:px-0">
       <div className="container mx-auto">
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex flex-col items-center justify-center min-h-screen">
+          <div className="mb-5 flex items-center justify-center text-[50px]">
+            <FaRegClock />
+            <span className="mx-3">{`00:${
+              time < 10 ? `0${time}` : time
+            }`}</span>
+          </div>
           <div className="w-full md:w-[650px] bg-white p-6 rounded-xl text-black">
-            <p className="font-semibold text-3xl">Quiz Unisagrado</p>
+            <div className="flex items-center justify-between font-semibold text-3xl">
+              <p>Quiz Unisagrado</p>
+              {/* Quantidade de perguntas */}
+              <p>1/4</p>
+            </div>
+
             <hr className="mt-4 border-black" />
 
             <div className="space-y-5 mt-5 text-xl">
@@ -48,6 +77,8 @@ export default function Quiz() {
           </div>
         </div>
       </div>
+
+      <ModalTempoEsgotado open={openModal} close={() => setOpenModal(false)} />
     </div>
   );
 }

@@ -12,3 +12,29 @@ body {
   background: rgb(255, 40, 40);
   color: #fff !important;
 }
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.modal-content {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  border: none;
+  border-radius: 6px;
+  background: white;
+  overflow: auto;
+  outline: none;
+  padding: 20px;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  max-width: 550px;
+  width: 100%;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0px;
+  background-color: #000000b2;
+  z-index: 9000;
+}
