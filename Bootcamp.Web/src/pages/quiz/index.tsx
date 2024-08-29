@@ -3,12 +3,20 @@ import { FaRegClock } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { ModalTempoEsgotado } from "../components/modal-tempo-esgotado";
 
+type Answer = "a" | "b" | "c" | "d";
+
 const TIME = 5;
 
 export default function Quiz() {
   const [time, setTime] = useState<number>(TIME);
 
   const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null);
+
+  const handleAnswerClick = (answer: Answer) => {
+    setSelectedAnswer(answer);
+  };
 
   useEffect(() => {
     if (time > 0) {
@@ -23,12 +31,24 @@ export default function Quiz() {
     <div className="py-6 px-8 md:px-0">
       <div className="container mx-auto">
         <div className="flex flex-col items-center justify-center min-h-screen">
-          <div className="mb-5 flex items-center justify-center text-[50px]">
-            <FaRegClock />
-            <span className="mx-3">{`00:${
-              time < 10 ? `0${time}` : time
-            }`}</span>
-          </div>
+          {time > 0 ? (
+            <div className="mb-5 flex items-center justify-center text-[50px]">
+              <FaRegClock />
+              <span className="mx-3">{`00:${
+                time < 10 ? `0${time}` : time
+              }`}</span>
+            </div>
+          ) : (
+            <div className="mb-5 flex items-center justify-center">
+              <button
+                onClick={() => setTime(TIME)}
+                className="w-full lg:w-[150px] py-2 rounded-lg bg-[#ff0b0b] hover:bg-[#b12727] border-4 border-white text-center uppercase font-bold hover:text-white transition-colors duration-150"
+              >
+                Reiniciar
+              </button>
+            </div>
+          )}
+
           <div className="w-full md:w-[650px] bg-white p-6 rounded-xl text-black">
             <div className="flex items-center justify-between font-semibold text-3xl">
               <p>Quiz Unisagrado</p>
@@ -44,19 +64,47 @@ export default function Quiz() {
                 JavaScript?
               </p>
 
-              <div className="w-full bg-white hover:bg-zinc-800 py-2 px-3 border border-black rounded-lg cursor-pointer transition-colors duration-150 hover:text-white">
+              <div
+                onClick={() => handleAnswerClick("a")}
+                className={`w-full bg-white py-2 px-3 border border-black rounded-lg cursor-pointer transition-colors duration-150 ${
+                  selectedAnswer === "a"
+                    ? "bg-zinc-800 text-white"
+                    : "hover:bg-zinc-800 hover:text-white"
+                }`}
+              >
                 Usaria split("") e reverse(), mas esqueceria de usar join("")
                 para unir os caracteres de volta.
               </div>
-              <div className="w-full bg-white hover:bg-zinc-800 py-2 px-3 border border-black rounded-lg cursor-pointer transition-colors duration-150 hover:text-white">
+              <div
+                onClick={() => handleAnswerClick("b")}
+                className={`w-full bg-white py-2 px-3 border border-black rounded-lg cursor-pointer transition-colors duration-150 ${
+                  selectedAnswer === "b"
+                    ? "bg-zinc-800 text-white"
+                    : "hover:bg-zinc-800 hover:text-white"
+                }`}
+              >
                 Tentaria usar join("") antes de split(""), o que não faz
                 sentido, pois join só funciona em arrays.
               </div>
-              <div className="w-full bg-white hover:bg-zinc-800 py-2 px-3 border border-black rounded-lg cursor-pointer transition-colors duration-150 hover:text-white">
+              <div
+                onClick={() => handleAnswerClick("c")}
+                className={`w-full bg-white py-2 px-3 border border-black rounded-lg cursor-pointer transition-colors duration-150 ${
+                  selectedAnswer === "c"
+                    ? "bg-zinc-800 text-white"
+                    : "hover:bg-zinc-800 hover:text-white"
+                }`}
+              >
                 Usaria slice() para tentar copiar a string antes de reverse() e
                 join(), o que não funcionaria corretamente.
               </div>
-              <div className="w-full bg-white hover:bg-zinc-800 py-2 px-3 border border-black rounded-lg cursor-pointer transition-colors duration-150 hover:text-white">
+              <div
+                onClick={() => handleAnswerClick("d")}
+                className={`w-full bg-white py-2 px-3 border border-black rounded-lg cursor-pointer transition-colors duration-150 ${
+                  selectedAnswer === "d"
+                    ? "bg-zinc-800 text-white"
+                    : "hover:bg-zinc-800 hover:text-white"
+                }`}
+              >
                 Usaria split("") para transformar a string em um array de
                 caracteres, depois reverse() para inverter o array, e join("")
                 para transformá-lo de volta em uma string.

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function CadastrarUsuario() {
   return (
-    <div className=" px-12 md:px-0">
+    <div className="px-12 md:px-0">
       <div className="container mx-auto">
         <div className="flex flex-col items-center justify-center min-h-screen">
           <p className="text-[30px] sm:text-[60px] font-bold mb-10 text-center">Vamos começar!</p>
@@ -42,10 +42,10 @@ export default function CadastrarUsuario() {
                   Voltar
                 </Link>
                 <Link
-                  to="/quiz"
+                  to="/dificuldade"
                   className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-[#ff0b0b] border-2 border-black hover:border-[#ff0b0b] text-center uppercase font-bold hover:text-white transition-colors duration-150 mt-3 lg:mt-0"
                 >
-                  Iniciar
+                  Continuar
                 </Link>
               </div>
             </div>
