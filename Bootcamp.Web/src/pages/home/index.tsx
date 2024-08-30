@@ -9,20 +9,20 @@ export default function Home() {
           <p className="text-2xl sm:text-3xl font-semibold text-shadow-white">
             Seja bem-vindo ao
           </p>
-          <p className="text-[75px] sm:text-[80px] md:text-[90px] lg:text-[120px] uppercase font-bold -mt-2 sm:-mt-4 md:-mt-6 lg:-mt-8 tracking-tighter text-shadow-white">
+          <p className="text-[75px] sm:text-[80px] md:text-[90px] lg:text-[120px] uppercase font-bold -mt-2 sm:-mt-4 md:-mt-6 lg:-mt-8 tracking-tighter blend_shadow amsterdam-font">
             MINDQUEST
           </p>
 
           <Link
             to="/cadastrar-usuario"
-            className="w-[280px] lg:w-[400px] py-2 rounded-lg bg-[#ff0b0b] hover:bg-[#b12727] border-white border-4 text-center uppercase font-bold text-[18px] md:text-[25px]"
+            className="w-[280px] lg:w-[400px] py-2 rounded-lg bg-[#dd0c0c] hover:bg-[#ff0b0b] hover:scale-110 transition duration-300 border-white border-4 text-center uppercase font-bold text-[18px] md:text-[25px]"
           >
             Teste seus conhecimentos
           </Link>
 
           <Link
             to="/pontuacao"
-            className="mt-5 w-[280px] lg:w-[400px] py-2 rounded-lg bg-[#ff0b0b] hover:bg-[#b12727] border-white border-4 text-center uppercase font-bold text-[18px] md:text-[25px]"
+            className="mt-5 w-[280px] lg:w-[400px] py-2 rounded-lg bg-[#dd0c0c] hover:bg-[#ff0b0b] hover:scale-110 transition duration-300 border-white border-4 text-center uppercase font-bold text-[18px] md:text-[25px]"
           >
             Ver pontuação
           </Link>

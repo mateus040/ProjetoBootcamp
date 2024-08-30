@@ -6,7 +6,7 @@ import { Layout } from "../../components/layout/main";
 
 type Answer = "a" | "b" | "c" | "d";
 
-const TIME = 5;
+const TIME = 20;
 
 export default function Quiz() {
   const [time, setTime] = useState<number>(TIME);

@@ -23,30 +23,30 @@ export default function Dificuldade() {
           <div className="flex flex-col md:flex-row items-center justify-center text-xl md:space-x-5 w-full p-6">
             <button
               onClick={() => handleSelectDifficulty("facil")}
-              className={`w-full lg:w-[250px] py-2 rounded-lg border-white border-4 text-center uppercase font-bold transition-colors duration-150 ${
+              className={`bg-[#c20000] w-full lg:w-[250px] py-2 rounded-lg border-white border-4 text-center uppercase font-bold transition-colors duration-150 ${
                 selectedDifficulty === "facil"
-                  ? "bg-[#5e1414] text-white"
-                  : "bg-[#ff0b0b] hover:bg-[#b12727] hover:text-white"
+                  ? "bg-[#ff0b0b] scale-110"
+                  : "hover:bg-[#ff0b0b] hover:scale-110 transition duration-300 transition-transform duration-300"
               }`}
             >
               Fácil
             </button>
             <button
               onClick={() => handleSelectDifficulty("medio")}
-              className={`w-full lg:w-[250px] py-2 rounded-lg border-white border-4 text-center uppercase font-bold transition-colors duration-150 mt-3 md:mt-0 ${
+              className={`bg-[#c20000] w-full lg:w-[250px] py-2 rounded-lg border-white border-4 text-center uppercase font-bold transition-colors duration-150 mt-3 md:mt-0 ${
                 selectedDifficulty === "medio"
-                  ? "bg-[#5e1414] text-white"
-                  : "bg-[#ff0b0b] hover:bg-[#b12727] hover:text-white"
+                  ? "bg-[#ff0b0b] scale-110"
+                  : "hover:bg-[#ff0b0b] hover:scale-110 transition duration-300 transition-transform duration-300"
               }`}
             >
               Médio
             </button>
             <button
               onClick={() => handleSelectDifficulty("dificil")}
-              className={`w-full lg:w-[250px] py-2 rounded-lg border-white border-4 text-center uppercase font-bold transition-colors duration-150 mt-3 md:mt-0 ${
+              className={`bg-[#c20000] w-full lg:w-[250px] py-2 rounded-lg border-white border-4 text-center uppercase font-bold transition-colors duration-150 mt-3 md:mt-0 ${
                 selectedDifficulty === "dificil"
-                  ? "bg-[#5e1414] text-white"
-                  : "bg-[#ff0b0b] hover:bg-[#b12727] hover:text-white"
+                  ? "bg-[#ff0b0b] scale-110"
+                  : "hover:bg-[#ff0b0b] hover:scale-110 transition duration-300 transition-transform duration-300"
               }`}
             >
               Difícil

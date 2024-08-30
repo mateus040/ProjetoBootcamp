@@ -9,7 +9,7 @@ export const Layout = ({ children }: Props) => {
         {Array(10)
           .fill("?")
           .map((_, index) => (
-            <div key={index} className="text-[55px]">
+            <div key={index} className="text-[65px]">
               ?
             </div>
           ))}
