@@ -4,7 +4,6 @@
 
 * {
   box-sizing: border-box !important;
-  /* font-family: "Poppins", sans-serif; */
   font-family: "Concert One", sans-serif;
 }
 
@@ -37,4 +36,48 @@ body {
   inset: 0px;
   background-color: #000000b2;
   z-index: 9000;
+}
+
+.fundo {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.fundo div {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.5);
+  user-select: none;
+  animation: flutuar 10s linear infinite;
+}
+
+/* Definir posições aleatórias e diferentes para cada "?" */
+.fundo div:nth-child(1) { top: 20%; left: 10%; animation-duration: 10s; }
+.fundo div:nth-child(2) { top: 40%; left: 25%; animation-duration: 12s; }
+.fundo div:nth-child(3) { top: 60%; left: 15%; animation-duration: 11s; }
+.fundo div:nth-child(4) { top: 80%; left: 30%; animation-duration: 13s; }
+.fundo div:nth-child(5) { top: 15%; left: 70%; animation-duration: 9s; }
+.fundo div:nth-child(6) { top: 50%; left: 80%; animation-duration: 12.5s; }
+.fundo div:nth-child(7) { top: 70%; left: 50%; animation-duration: 14s; }
+.fundo div:nth-child(8) { top: 30%; left: 85%; animation-duration: 11.5s; }
+.fundo div:nth-child(9) { top: 90%; left: 40%; animation-duration: 14.5s; }
+.fundo div:nth-child(10) { top: 25%; left: 60%; animation-duration: 13.2s; }
+
+@keyframes flutuar {
+  0% {
+    transform: scale(0.5) translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.3) translateY(-90px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Estilo para o texto central com sombra */
+.text-shadow-white {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
