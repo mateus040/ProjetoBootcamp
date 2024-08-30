@@ -8,9 +8,9 @@ export const Layout = ({ children }: Props) => {
       <div className="fundo">
         {Array(10)
           .fill("?")
-          .map((symbol, index) => (
+          .map((_, index) => (
             <div key={index} className="text-[55px]">
-              {symbol}
+              ?
             </div>
           ))}
       </div>
