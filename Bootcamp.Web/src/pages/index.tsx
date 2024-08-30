@@ -5,7 +5,7 @@ export default function Home() {
     <div className="container mx-auto">
       <div className="flex flex-col items-center justify-center h-screen">
         <p className="text-2xl sm:text-3xl font-semibold">Seja bem-vindo ao</p>
-        <p className="text-[60px] sm:text-[80px] md:text-[90px] lg:text-[120px] uppercase font-bold -mt-2 sm:-mt-4 md:-mt-6 lg:-mt-8 tracking-tighter">
+        <p className="text-[75px] sm:text-[80px] md:text-[90px] lg:text-[120px] uppercase font-bold -mt-2 sm:-mt-4 md:-mt-6 lg:-mt-8 tracking-tighter">
           MINDQUEST
         </p>
 
