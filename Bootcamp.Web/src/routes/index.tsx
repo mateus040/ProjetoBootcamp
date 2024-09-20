@@ -5,6 +5,8 @@ import Quiz from "../pages/quiz";
 import CadastrarUsuario from "../pages/cadastrar-usuario";
 import Pontuacao from "../pages/pontuacao";
 import Dificuldade from "../pages/dificuldade";
+import Login from "../pages/login";
+import PrivateRoute from "./private-route";
 
 export default function AppRouter() {
   return (
@@ -14,11 +16,27 @@ export default function AppRouter() {
 
         <Route path="/cadastrar-usuario" element={<CadastrarUsuario />} />
 
-        <Route path="/quiz" element={<Quiz />} />
+        <Route path="/login" element={<Login />} />
 
         <Route path="/pontuacao" element={<Pontuacao />} />
 
-        <Route path="/dificuldade" element={<Dificuldade />} />
+        <Route
+          path="/quiz"
+          element={
+            <PrivateRoute>
+              <Quiz />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/dificuldade"
+          element={
+            <PrivateRoute>
+              <Dificuldade />
+            </PrivateRoute>
+          }
+        />
 
         {/* NotFound */}
         <Route path="*" element={<NotFound />} />

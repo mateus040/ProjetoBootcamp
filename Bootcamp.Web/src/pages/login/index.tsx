@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
+import LayoutAutenticacao from "../../components/layout/autenticacao";
 import { Layout } from "../../components/layout/main";
 import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { SubmitHandler, useForm } from "react-hook-form";
-import LayoutAutenticacao from "../../components/layout/autenticacao";
 import apiErrorHandler from "../../services/api-error-handler";
 
 interface UserFormData {
@@ -12,7 +12,7 @@ interface UserFormData {
   telefone: string;
 }
 
-export default function CadastrarUsuario() {
+export default function Login() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -32,10 +32,14 @@ export default function CadastrarUsuario() {
     };
 
     axios
-      .post("http://localhost:8000/api/accounts/register/", args)
-      .then(() => {
-        toast.success("Conta criada com sucesso!");
-        navigate("/login");
+      .post("http://localhost:8000/api/accounts/login/", args)
+      .then((response) => {
+        const token = response.data.token;
+
+        sessionStorage.setItem("token", token);
+
+        toast.success("Logado com sucesso!");
+        navigate("/dificuldade");
       })
       .catch(apiErrorHandler)
       .finally(() => setLoading(false));
@@ -44,11 +48,11 @@ export default function CadastrarUsuario() {
   return (
     <Layout>
       <LayoutAutenticacao>
-        <p className="font-semibold text-3xl">Cadastro</p>
+        <p className="font-semibold text-3xl">Entrar</p>
         <hr className="mt-4 border-black" />
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 mt-5">
           <p className="font-semibold text-xl">
-            Cadastre-se em nosso sistema para poder continuar
+            Faça login em nosso sistema para poder continuar
           </p>
 
           <div className="flex flex-col text-xl">
@@ -80,9 +84,9 @@ export default function CadastrarUsuario() {
           </div>
 
           <p className="mt-3 text-lg">
-            Já tem uma conta?{" "}
-            <Link to="/login" className="underline font-bold">
-              Entrar
+            Ainda não tem uma conta?{" "}
+            <Link to="/cadastrar-usuario" className="underline font-bold">
+              Crie uma!
             </Link>
           </p>
 
@@ -98,7 +102,7 @@ export default function CadastrarUsuario() {
               type="submit"
               disabled={loading}
             >
-              {loading ? "Acessando..." : "Acessar"}
+              {loading ? "Entrando..." : "Entrar"}
             </button>
           </div>
         </form>
