@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { Layout } from "../../components/layout/main";
 import { useEffect, useState } from "react";
-import ScoresModel from "../../interfaces/Models/ScoresModel";
+import PontuacaoModel from "../../interfaces/Models/PontuacaoModel";
 import axios from "axios";
 import apiErrorHandler from "../../services/api-error-handler";
 
 export default function Pontuacao() {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [points, setPoints] = useState<ScoresModel[]>([]);
+  const [points, setPoints] = useState<PontuacaoModel[]>([]);
 
   const fetchPoints = () => {
     setLoading(true);

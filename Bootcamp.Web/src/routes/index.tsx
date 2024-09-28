@@ -13,11 +13,8 @@ export default function AppRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-
         <Route path="/cadastrar-usuario" element={<CadastrarUsuario />} />
-
         <Route path="/login" element={<Login />} />
-
         <Route path="/pontuacao" element={<Pontuacao />} />
 
         <Route

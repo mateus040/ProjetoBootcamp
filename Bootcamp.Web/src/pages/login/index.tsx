@@ -14,7 +14,6 @@ interface UserFormData {
 
 export default function Login() {
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState<boolean>(false);
 
   const {
@@ -32,11 +31,13 @@ export default function Login() {
     };
 
     axios
-      .post("http://localhost:8000/api/accounts/login/", args)
+      .post("http://localhost:8000/api/accounts/login/", args, {
+        withCredentials: true,
+      })
       .then((response) => {
-        const token = response.data.token;
+        const { userId } = response.data;
 
-        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("user_id", userId);
 
         toast.success("Logado com sucesso!");
         navigate("/dificuldade");
@@ -93,12 +94,12 @@ export default function Login() {
           <div className="flex flex-col lg:flex-row items-center justify-between text-xl">
             <Link
               to="/"
-              className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-zinc-800 border-2 border-black hover:border-zinc-800 text-center uppercase font-bold hover:text-white transition-colors duration-150"
+              className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-zinc-800 border-2 border-black hover:border-zinc-800 text-center uppercase font-bold hover:text-white transition-colors duration-150 mt-3 lg:mt-0 order-2 lg:order-1"
             >
               Voltar
             </Link>
             <button
-              className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-[#ff0b0b] border-2 border-black hover:border-[#ff0b0b] text-center uppercase font-bold hover:text-white transition-colors duration-150 mt-3 lg:mt-0"
+              className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-[#ff0b0b] border-2 border-black hover:border-[#ff0b0b] text-center uppercase font-bold hover:text-white transition-colors duration-150 order-1 lg:order-2"
               type="submit"
               disabled={loading}
             >

@@ -1,7 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Layout } from "../../components/layout/main";
 
 export default function Home() {
+  const navigate = useNavigate();
+  const isLoggedIn = !!sessionStorage.getItem("user_id");
+
+  const handleNext = () => {
+    if (isLoggedIn) {
+      navigate("/dificuldade");
+    } else {
+      navigate("/login");
+    }
+  }
+
   return (
     <Layout>
       <div className="container mx-auto">
@@ -13,12 +24,12 @@ export default function Home() {
             MINDQUEST
           </p>
 
-          <Link
-            to="/cadastrar-usuario"
+          <button
+            onClick={handleNext}
             className="w-[280px] lg:w-[400px] py-2 rounded-lg bg-[#dd0c0c] hover:bg-[#ff0b0b] hover:scale-110 transition duration-300 border-white border-4 text-center uppercase font-bold text-[18px] md:text-[25px]"
           >
             Teste seus conhecimentos
-          </Link>
+          </button>
 
           <Link
             to="/pontuacao"

@@ -89,12 +89,12 @@ export default function CadastrarUsuario() {
           <div className="flex flex-col lg:flex-row items-center justify-between text-xl">
             <Link
               to="/"
-              className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-zinc-800 border-2 border-black hover:border-zinc-800 text-center uppercase font-bold hover:text-white transition-colors duration-150"
+              className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-zinc-800 border-2 border-black hover:border-zinc-800 text-center uppercase font-bold hover:text-white transition-colors duration-150 mt-3 lg:mt-0 order-2 lg:order-1"
             >
               Voltar
             </Link>
             <button
-              className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-[#ff0b0b] border-2 border-black hover:border-[#ff0b0b] text-center uppercase font-bold hover:text-white transition-colors duration-150 mt-3 lg:mt-0"
+              className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-[#ff0b0b] border-2 border-black hover:border-[#ff0b0b] text-center uppercase font-bold hover:text-white transition-colors duration-150 order-1 lg:order-2"
               type="submit"
               disabled={loading}
             >

@@ -1,23 +1,106 @@
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FaRegClock } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { ModalTempoEsgotado } from "../components/modal-tempo-esgotado";
 import { Layout } from "../../components/layout/main";
+import { Difficulty } from "../../enums/dificuldade";
+import { questions } from "../../constants/perguntas";
+import EmptyModal from "../../components/empty-modal";
+import toast from "react-hot-toast";
+import axios from "axios";
+import apiErrorHandler from "../../services/api-error-handler";
 
 type Answer = "a" | "b" | "c" | "d";
 
 const TIME = 20;
 
 export default function Quiz() {
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState<boolean>(false);
+
   const [time, setTime] = useState<number>(TIME);
-
   const [openModal, setOpenModal] = useState<boolean>(false);
-
   const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+  const [correctAnswers, setCorrectAnswers] = useState<number>(0);
+  const [showResultsModal, setShowResultsModal] = useState<boolean>(false);
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const difficulty = queryParams.get("difficulty") as Difficulty;
+
+  const filteredQuestions = questions.filter(
+    (question) => question.difficulty === difficulty
+  );
 
   const handleAnswerClick = (answer: Answer) => {
     setSelectedAnswer(answer);
   };
+
+  const handleCheckAnswer = () => {
+    if (selectedAnswer === null) {
+      toast.error("Por favor, selecione uma resposta antes de verificar.");
+      return;
+    }
+
+    const currentQuestion = filteredQuestions[currentQuestionIndex];
+    const isCorrectAnswer = currentQuestion.answers.find(
+      (ans) =>
+        ans.text ===
+        currentQuestion.answers[selectedAnswer.charCodeAt(0) - 97].text
+    )?.isCorrect;
+
+    if (isCorrectAnswer) {
+      setCorrectAnswers((prev) => prev + 1);
+    }
+
+    if (currentQuestionIndex < filteredQuestions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setSelectedAnswer(null);
+    } else {
+      // Se for a última pergunta, chama a função para enviar a pontuação
+      handleSubmitScore();
+    }
+  };
+
+  const handleSubmitScore = async () => {
+    setLoading(true);
+
+    const scorePerQuestion = 10; // Define quantos pontos cada pergunta vale
+    const totalScore = correctAnswers * scorePerQuestion;
+
+    await axios
+      .post(
+        "http://localhost:8000/api/accounts/update-score/",
+        {
+          pontuacao: totalScore,
+        },
+        { withCredentials: true }
+      )
+      .then(() => {
+        setShowResultsModal(true);
+      })
+      .catch(apiErrorHandler)
+      .finally(() => setLoading(false));
+  };
+
+  const handleBackButton = () => {
+    if (currentQuestionIndex === 0) {
+      navigate("/dificuldade");
+    } else {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+      setTime(TIME);
+    }
+  };
+
+  const handleBackButtonModal = () => {
+    setShowResultsModal(false);
+    setCurrentQuestionIndex(0);
+    setCorrectAnswers(0);
+    setTime(TIME);
+    navigate("/")
+  }
 
   useEffect(() => {
     if (time > 0) {
@@ -51,88 +134,95 @@ export default function Quiz() {
               </div>
             )}
 
-            <div className="w-full md:w-[650px] bg-white p-6 rounded-xl text-black">
-              <div className="flex items-center justify-between font-semibold text-3xl">
-                <p>Quiz Unisagrado</p>
-                {/* Quantidade de perguntas */}
-                <p>1/4</p>
-              </div>
-
-              <hr className="mt-4 border-black" />
-
-              <div className="space-y-5 mt-5 text-xl">
-                <p className="font-semibold">
-                  Como você implementaria uma função para inverter uma string em
-                  JavaScript?
-                </p>
-
-                <div
-                  onClick={() => handleAnswerClick("a")}
-                  className={`w-full bg-white py-2 px-3 border border-black rounded-lg cursor-pointer transition-colors duration-150 ${
-                    selectedAnswer === "a"
-                      ? "bg-zinc-800 text-white"
-                      : "hover:bg-zinc-800 hover:text-white"
-                  }`}
-                >
-                  Usaria split("") e reverse(), mas esqueceria de usar join("")
-                  para unir os caracteres de volta.
+            {filteredQuestions.length > 0 ? (
+              <div className="w-full md:w-[650px] bg-white p-6 rounded-xl text-black">
+                <div className="flex items-center justify-between font-semibold text-3xl">
+                  <p>Quiz Unisagrado</p>
+                  <p>
+                    {currentQuestionIndex + 1}/{filteredQuestions.length}
+                  </p>
                 </div>
-                <div
-                  onClick={() => handleAnswerClick("b")}
-                  className={`w-full bg-white py-2 px-3 border border-black rounded-lg cursor-pointer transition-colors duration-150 ${
-                    selectedAnswer === "b"
-                      ? "bg-zinc-800 text-white"
-                      : "hover:bg-zinc-800 hover:text-white"
-                  }`}
-                >
-                  Tentaria usar join("") antes de split(""), o que não faz
-                  sentido, pois join só funciona em arrays.
+
+                <hr className="mt-4 border-black" />
+
+                <div className="space-y-5 mt-5 text-xl">
+                  <p className="font-semibold">
+                    {filteredQuestions[currentQuestionIndex].question}
+                  </p>
+
+                  {filteredQuestions[currentQuestionIndex].answers.map(
+                    (answer, index) => (
+                      <div
+                        key={index}
+                        onClick={() =>
+                          handleAnswerClick(
+                            String.fromCharCode(97 + index) as Answer
+                          )
+                        }
+                        className={`w-full bg-white py-2 px-3 border border-black rounded-lg cursor-pointer transition-colors duration-150 ${
+                          selectedAnswer === String.fromCharCode(97 + index)
+                            ? "bg-zinc-800 text-white"
+                            : "hover:bg-zinc-800 hover:text-white"
+                        }`}
+                      >
+                        {answer.text}
+                      </div>
+                    )
+                  )}
                 </div>
-                <div
-                  onClick={() => handleAnswerClick("c")}
-                  className={`w-full bg-white py-2 px-3 border border-black rounded-lg cursor-pointer transition-colors duration-150 ${
-                    selectedAnswer === "c"
-                      ? "bg-zinc-800 text-white"
-                      : "hover:bg-zinc-800 hover:text-white"
-                  }`}
-                >
-                  Usaria slice() para tentar copiar a string antes de reverse()
-                  e join(), o que não funcionaria corretamente.
-                </div>
-                <div
-                  onClick={() => handleAnswerClick("d")}
-                  className={`w-full bg-white py-2 px-3 border border-black rounded-lg cursor-pointer transition-colors duration-150 ${
-                    selectedAnswer === "d"
-                      ? "bg-zinc-800 text-white"
-                      : "hover:bg-zinc-800 hover:text-white"
-                  }`}
-                >
-                  Usaria split("") para transformar a string em um array de
-                  caracteres, depois reverse() para inverter o array, e join("")
-                  para transformá-lo de volta em uma string.
+
+                <div className="flex flex-col lg:flex-row items-center justify-between mt-4 text-xl">
+                  <button
+                    onClick={handleBackButton}
+                    className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-zinc-800 border-2 border-black hover:border-zinc-800 text-center uppercase font-bold hover:text-white transition-colors duration-150 mt-3 lg:mt-0 order-2 lg:order-1"
+                  >
+                    Voltar
+                  </button>
+                  <button
+                    onClick={handleCheckAnswer}
+                    className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-[#ff0b0b] border-2 border-black hover:border-[#ff0b0b] text-center uppercase font-bold hover:text-white transition-colors duration-150 order-1 lg:order-2"
+                    disabled={loading}
+                  >
+                    {currentQuestionIndex < filteredQuestions.length - 1
+                      ? "Próximo"
+                      : loading
+                      ? "Finalizando..."
+                      : "Finalizar"}
+                  </button>
                 </div>
               </div>
-
-              <div className="flex flex-col lg:flex-row items-center justify-between mt-4 text-xl">
-                <Link
-                  to="/"
-                  className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-zinc-800 border-2 border-black hover:border-zinc-800 text-center uppercase font-bold hover:text-white transition-colors duration-150"
-                >
-                  Voltar
-                </Link>
-                <button className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-[#ff0b0b] border-2 border-black hover:border-[#ff0b0b] text-center uppercase font-bold hover:text-white transition-colors duration-150 mt-3 lg:mt-0">
-                  Verificar
-                </button>
-              </div>
-            </div>
+            ) : (
+              <p>Não há perguntas disponíveis para esta dificuldade.</p>
+            )}
           </div>
         </div>
-
-        <ModalTempoEsgotado
-          open={openModal}
-          close={() => setOpenModal(false)}
-        />
       </div>
+
+      <ModalTempoEsgotado open={openModal} close={() => setOpenModal(false)} />
+
+      <EmptyModal
+        isOpen={showResultsModal}
+        close={() => setShowResultsModal(false)}
+        title="Resultados do Quiz"
+      >
+        <p className="text-xl text-black">
+          Você acertou {correctAnswers} de {filteredQuestions.length} perguntas.
+        </p>
+        <div className="flex flex-col lg:flex-row items-center justify-between mt-5">
+          <button
+            onClick={handleBackButtonModal}
+            className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-zinc-800 border-2 border-black hover:border-zinc-800 text-center uppercase font-bold hover:text-white transition-colors duration-150 text-black mt-3 lg:mt-0 order-2 lg:order-1"
+          >
+            Fechar
+          </button>
+          <button
+            onClick={() => navigate("/pontuacao")}
+            className="w-full lg:w-[150px] py-2 rounded-lg bg-transparent hover:bg-[#ff0b0b] border-2 border-[#ff0b0b] hover:border-[#ff0b0b] text-center uppercase font-bold hover:text-white transition-colors duration-150 text-[#ff0b0b] order-1 lg:order-2"
+          >
+            Continuar
+          </button>
+        </div>
+      </EmptyModal>
     </Layout>
   );
 }
